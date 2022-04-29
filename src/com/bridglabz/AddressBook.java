@@ -1,18 +1,23 @@
 package com.bridglabz;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBook {
-    static String firstName;
-    static String lastName;
-    static String city;
-    static String state;
-    static String address;
-    static String emailId;
-    static long phoneNo;
-    static int zipCode;
+    String firstName;
+    String lastName;
+    String city;
+    String state;
+    String address;
+    String emailId;
+    long phoneNo;
+    int zipCode;
+    ArrayList<AddressBook> contactDetails=new ArrayList<>();
+    String userWish="y";
+    int count=1;
 
     // Creating function to get user Input
-    private static void getInput() {
+    private void getInput() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the First Name : ");
         firstName = sc.next();
@@ -38,11 +43,9 @@ public class AddressBook {
         System.out.print("Enter the  Phone Number: ");
         phoneNo = sc.nextLong();
     }
-
-    // Main Method
-    public static void main(String[] args) {
-        System.out.println("Welcome to Address Book Program");
-        AddressBook.getInput();
+    // Display User Details
+    private void displayDetails(AddressBook display){
+        System.out.println("contact"+count);
         System.out.println("First Name: " + firstName);
         System.out.println("Last Name: " + lastName);
         System.out.println("Address: " + address);
@@ -51,5 +54,26 @@ public class AddressBook {
         System.out.println("Email-Id : " + emailId);
         System.out.println("Zip Code : " + zipCode);
         System.out.println("phone Number Name : " + phoneNo);
+        count++;
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+        System.out.println("Welcome to Address Book Program");
+        AddressBook addressBookMain=new AddressBook();
+        Scanner userInput =new Scanner(System.in);
+        while(addressBookMain.userWish.matches("y")) {
+            addressBookMain.getInput();
+            addressBookMain.contactDetails.add(addressBookMain);
+            System.out.println("IF YOU WANT TO ADD NEW RECORD PLEASE INSERT " + "y " + "OR else " + "n");
+            addressBookMain.userWish = userInput.next();
+            if (addressBookMain.userWish == "n")
+            {
+                break;
+            }
+        }
+        for (int i = 0; i < addressBookMain.contactDetails.size(); i++) {
+            addressBookMain.displayDetails(addressBookMain.contactDetails.get(i));
+        }
     }
 }
