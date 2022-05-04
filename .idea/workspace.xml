@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e9eb5e6-01fc-45cd-a1fc-3c1e1dde2c7b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bridglabz/AddressBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bridglabz/AddressBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bridglabz/ContactPerson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bridglabz/ContactPerson.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class AddressBook {
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program");
-        ContactPersonDetails contactPersonDetails = new ContactPersonDetails();
-        ArrayList<ContactPersonDetails> contactDetails = new ArrayList<>();
+        ContactPerson contactPersonDetails = new ContactPerson();
+        ArrayList<ContactPerson> contactDetails = new ArrayList<>();
         String name;
         Scanner sc = new Scanner(System.in);
         boolean flag = true;
