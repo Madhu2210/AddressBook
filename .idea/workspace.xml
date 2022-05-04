@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6e9eb5e6-01fc-45cd-a1fc-3c1e1dde2c7b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/src/com/bridglabz/AddressBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bridglabz/AddressBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bridglabz/ContactPersonDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bridglabz/ContactPersonDetails.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -2,7 +2,7 @@ package com.bridglabz;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-public class ContactPersonDetails {
+public class ContactPerson {
     String firstName;
     String lastName;
     String city;
@@ -17,23 +17,23 @@ public class ContactPersonDetails {
 //    }
 
     // Display User Details
-    public void addressBook(ArrayList<ContactPersonDetails> contactPerson) {
+    public void addressBook(ArrayList<ContactPerson> contactPerson) {
         for (int i = 0; i < contactPerson.size(); i++) {
             System.out.println("contact" + count);
-            System.out.println("First Name: " + firstName);
-            System.out.println("Last Name: " + lastName);
-            System.out.println("Address: " + address);
-            System.out.println("City Name : " + city);
-            System.out.println("State Name : " + state);
-            System.out.println("Email-Id : " + emailId);
-            System.out.println("Zip Code : " + zipCode);
-            System.out.println("phone Number Name : " + phoneNo);
+            System.out.println("First Name: " + contactPerson.get(i).firstName);
+            System.out.println("Last Name: " + contactPerson.get(i).lastName);
+            System.out.println("Address: " + contactPerson.get(i).address);
+            System.out.println("City Name : " + contactPerson.get(i).city);
+            System.out.println("State Name : " + contactPerson.get(i).state);
+            System.out.println("Email-Id : " + contactPerson.get(i).emailId);
+            System.out.println("Zip Code : " + contactPerson.get(i).zipCode);
+            System.out.println("phone Number : " + contactPerson.get(i).phoneNo);
             count++;
         }
     }
 
     //          Update the Contact Details
-    public void updateData(String name, ArrayList<ContactPersonDetails> contactDetails) {
+    public void updateData(String name, ArrayList<ContactPerson> contactDetails) {
         for (int i = 0; i < contactDetails.size(); i++) {
             if (name.equals(contactDetails.get(i).firstName)) {
                 contactDetails.remove(i);
@@ -45,8 +45,8 @@ public class ContactPersonDetails {
 
     // Creating function to get user Input
 
-    public ContactPersonDetails getInput() {
-        ContactPersonDetails addressBookMain = new ContactPersonDetails();
+    public ContactPerson getInput() {
+        ContactPerson addressBookMain = new ContactPerson();
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the First Name : ");
         addressBookMain.firstName = sc.next();
@@ -73,7 +73,7 @@ public class ContactPersonDetails {
         addressBookMain.phoneNo = sc.nextLong();
         return addressBookMain;
     }
-    public void deleteRecord(String name, ArrayList<ContactPersonDetails> contactDetails) {
+    public void deleteRecord(String name, ArrayList<ContactPerson> contactDetails) {
         if(contactDetails.size()>0) {
             for (int i = 0; i < contactDetails.size(); i++) {
                 if (name.equals(contactDetails.get(i).firstName)) {
