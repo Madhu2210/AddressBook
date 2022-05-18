@@ -10,12 +10,12 @@ public class AddressBook {
         System.out.println("Welcome to Address Book");
         Map<String, ArrayList<AddressBookMain>> addressHashMap=new HashMap();
         ArrayList record= new ArrayList();
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         String bookName;
         boolean flag=true;
 
         while(flag){
-            System.out.println("--------------------------------------------");
+            System.out.println("------------------------");
             System.out.println("1 - Add more Address Book  \n2 - Edit Address Book \n3 - Delete Address Book \n4 - Show AddressBook " +
                     "\n0 -  for exit \nEnter your Choice.....");
             int choice = sc.nextInt();
@@ -48,11 +48,11 @@ public class AddressBook {
                     }
                     break;
                 case 4:
-                    System.out.println("Address Bool List");
+                    System.out.println("Address Book List");
 
                     for(String name:addressHashMap.keySet()){
                         String value=addressHashMap.get(name).toString();
-                        System.out.println(name+" --> "+value);
+                        System.out.println(name+" -> "+value);
                     }
                     break;
                 case 0:

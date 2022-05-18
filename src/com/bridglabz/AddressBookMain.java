@@ -25,7 +25,7 @@ import java.util.Scanner;
 
                 switch (userChoice) {
                     case 1:
-                        contactDetails.add(contactPersonDetails.getInput());
+                        contactDetails.add(contactPersonDetails.getInput(contactDetails));
                         break;
                     case 2:
                         System.out.println("Enter first name that you want to edit contactDetails");

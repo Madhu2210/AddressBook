@@ -40,7 +40,7 @@ public class ContactPerson {
         for (int i = 0; i < contactDetails.size(); i++) {
             if (name.equals(contactDetails.get(i).firstName)) {
                 contactDetails.remove(i);
-                contactDetails.add(i, getInput());
+                contactDetails.add(i, getInput(contactDetails));
             }
         }
         System.out.println("Record Update Successfully");
@@ -48,7 +48,7 @@ public class ContactPerson {
 
     // Creating function to get user Input
 
-    public ContactPerson getInput() {
+    public ContactPerson getInput(ArrayList<ContactPerson> contactDetails) {
         ContactPerson contactPersonDetails = new ContactPerson();
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the First Name : ");
@@ -74,6 +74,7 @@ public class ContactPerson {
 
         System.out.print("Enter the  Phone Number: ");
         contactPersonDetails.phoneNo = sc.nextLong();
+        count++;
         return contactPersonDetails;
     }
     //   Delete the Contact Details
@@ -95,6 +96,19 @@ public class ContactPerson {
             System.out.println("Person contact for the "+addressbook+" is "+addressBookHashMap.get(addressbook).toString());
         }
     }
+    public void checkDuplicateRecords(String name, String lastName, ArrayList<ContactPerson> contactDetails){
+        for (int i = 0; i < contactDetails.size(); i++) {
+            String existingRecordName = contactDetails.get(i).firstName+" "+ contactDetails.get(i).lastName;
+            String newRecordName=name+" "+lastName;
+            if(newRecordName.equals(existingRecordName)){
+                System.out.println("Record with same Name already exists");
+                AddressBookMain.contactBookOptions();
+                break;
+            }else{
+                continue;
+            }
+        }
+    }
 
     @Override
     public String toString() {
@@ -111,4 +125,3 @@ public class ContactPerson {
                 '}';
     }
 }
-
