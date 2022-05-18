@@ -1,8 +1,10 @@
 package com.bridglabz;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // Declaring Variable
 public class ContactPerson<Person> {
@@ -56,6 +58,9 @@ public class ContactPerson<Person> {
 
         System.out.print("Enter the Last Name : ");
         contactPersonDetails.lastName = sc.next();
+        if (count > 1){
+            checkDuplicateRecords(contactPersonDetails.firstName, contactPersonDetails.lastName, contactDetails);
+        }
 
         System.out.print("Enter the Address: ");
         contactPersonDetails.address = sc.next();
@@ -121,6 +126,21 @@ public class ContactPerson<Person> {
                                     System.out.println(person);
                             });
                 });
+    }
+
+    // Show the Persons by City or State
+    static Map<String, ContactPerson> cityStateRelatedData(String cityStateName, Map<String, ArrayList<ContactPerson>> addressHashMap) {
+        Map<String, ContactPerson> CityName = new HashMap<>();
+        AtomicInteger cityCounter = new AtomicInteger(1);
+        addressHashMap
+                .values()
+                .forEach(value -> {
+                    value.forEach(person -> {
+                        if (person.city.equals(cityStateName) || person.state.equals(cityStateName))
+                            CityName.put((cityCounter.getAndIncrement() + ""), person);
+                    });
+                });
+        return CityName;
     }
 
     @Override

@@ -7,13 +7,14 @@ public class AddressBook {
     public static void main(String[] args) throws IOException {
         System.out.println("Welcome to Address Book");
         Map<String, ArrayList<AddressBookMain>> addressHashMap = new HashMap();
+        Map<String, ArrayList<ContactPerson>> personDetailsMap = new HashMap<>();
         ArrayList record = new ArrayList();
         Scanner sc = new Scanner(System.in);
         String bookName;
         boolean flag = true;
 
         while (flag) {
-            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------");
             System.out.println("1 - Add more Address Book  \n2 - Edit Address Book \n3 - Delete Address Book \n4 - Show AddressBook " + "\n5 - Search Using City or State" +
                     "\n0 -  for exit \nEnter your Choice.....");
             int choice = sc.nextInt();
@@ -30,7 +31,6 @@ public class AddressBook {
                     ArrayList temp = addressHashMap.get(bookName);
                     if (temp != null) {
                         record.add(temp);
-
                     }
                     addressHashMap.put(bookName, record);
                     break;
@@ -54,6 +54,13 @@ public class AddressBook {
                 case 5:
                     System.out.print("Enter City name : ");
                     ContactPerson.search((new Scanner(System.in).next()), addressHashMap);
+                    break;
+                case 6:
+                    System.out.print("Enter City or State name : ");
+                    Map<String, ContactPerson> cityStateMap = ContactPerson.cityStateRelatedData((new Scanner(System.in).next()), personDetailsMap);
+                    for (String cityCount : cityStateMap.keySet()) {
+                        System.out.println(cityCount + " - " + cityStateMap.get(cityCount));
+                    }
                     break;
                 case 0:
                     flag = false;
