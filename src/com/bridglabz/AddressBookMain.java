@@ -7,15 +7,16 @@ import java.util.Scanner;
 
     public class AddressBookMain {
 
-        public static ArrayList<ContactPerson> contactBookOptions() {
-
-            ContactPerson contactPersonDetails = new ContactPerson();
-            Map<String, ContactPerson> addressBookHashMap = new HashMap<>();
-            ArrayList<ContactPerson> contactDetails = new ArrayList<>();
-            String name;
-            Scanner sc = new Scanner(System.in);
-            boolean flag = true;
-            int userChoice = 1;
+            public static ContactPerson contactPersonDetails = new ContactPerson();
+            public Map<String, ContactPerson> addressBookHashMap = new HashMap<>();
+            public static ArrayList<ContactPerson> contactDetails = new ArrayList<>();
+            public static String name;
+            public static Scanner sc = new Scanner(System.in);
+            public static boolean flag = true;
+            public static int userChoice = 1;
+            public String city;
+            public String state;
+        public static ArrayList<ContactPerson> contactBookOptions(){
 
             // User Choose the Option
 
