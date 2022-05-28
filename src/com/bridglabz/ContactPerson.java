@@ -10,7 +10,7 @@ public class ContactPerson {
     String address;
     String city;
     String state;
-    int zip;
+    Integer zip;
     long phoneNumber;
     String emailId;
 

@@ -25,6 +25,7 @@ public class AddressBook {
                     "\n6 - City wise data "+
                     "\n7 - Enter the city/state name for find the count " +
                     "\n8 - Enter book Name to find sorted contact person" +
+                    "\n9 - Sort Address book entries by City/State/Zip " +
                     "\n0 -  for exit \nEnter your Choice.....");
             int choice = sc.nextInt();
             switch (choice) {
@@ -76,12 +77,34 @@ public class AddressBook {
                     List<ContactPerson> contacts=addressBookHashMap.get(book);
                     sortContact(contacts);
                     break;
+                case 9:
+                    System.out.println("Enter the Book Name : ");
+                    String bookName = sc.next();
+                    List<ContactPerson> contact = addressBookHashMap.get(bookName);
+                    System.out.println("1- City \n2- Sate \n3- Zip");
+                    sortAddressBookCityStateZip(new Scanner(System.in).nextInt(), contact);
+                    break;
                 case 0:
                     flag = false;
                     break;
                 default:
                     System.out.println("Please enter valid input");
             }
+        }
+    }
+    private static void sortAddressBookCityStateZip(int option, List<ContactPerson> contact) {
+        List<ContactPerson> listObject = null;
+        if (option == 1) {
+            listObject = contact.stream().sorted((o1, o2) -> o1.city.compareTo(o2.city)).collect(Collectors.toList());
+        }
+        if (option == 2) {
+            listObject = contact.stream().sorted((o1, o2) -> o1.state.compareTo(o2.state)).collect(Collectors.toList());
+        }
+        if (option == 3) {
+            listObject = contact.stream().sorted((o1, o2) -> o1.zip.compareTo(o2.zip)).collect(Collectors.toList());
+        }
+        for (ContactPerson cp : listObject) {
+            System.out.println(cp);
         }
     }
     private static void sortContact(List<ContactPerson> contacts) {
