@@ -1,6 +1,13 @@
 package com.bridglabz;
 
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,32 +17,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class AddressBook {
-
-    private static final String PATH ="C:\\Users\\Rajnish\\Desktop\\madhu\\AddressBook2\\src\\main\\resources\\MyBook";
-
-    public static void main(String[] args) throws IOException {
+    private static final String PATH = "C:\\Users\\Rajnish\\Desktop\\madhu\\AddressBook2\\src\\main\\resources\\MyBook";
+    public static void main(String[] args) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         System.out.println("Welcome to Address Book Program");
         Scanner sc = new Scanner(System.in);
-
         String addressBookName;
         Map<String, ArrayList<ContactPerson>> addressBookHashMap = new HashMap<>();
-        //testing data
 
-        // addressBookHashMap = TestMain1.setData();
+        //addressBookHashMap = TestMain.setData();
+
         ArrayList arrayList = null;
         boolean flag = true;
-
         while (flag) {
-
             System.out.println("------------------------Address Book--------------------");
             System.out.println("1 - Add more Address Book  " +
                     "\n2 - Edit Address Book " +
                     "\n3 - Delete Address Book " +
                     "\n4 - Show AddressBook " +
                     "\n5 - Search person Using City or State" +
-                    "\n6 - City wise data "+
+                    "\n6 - City wise data " +
                     "\n7 - Enter the city/state name for find the count " +
-                    "\n8 - Enter book Name to find sorted contact person" +
+                    "\n8 - Enter book Name to find sorted contact person " +
                     "\n9 - Sort Address book entries by City/State/Zip " +
                     "\n0 -  for exit \nEnter your Choice.....");
             int choice = sc.nextInt();
@@ -44,6 +46,7 @@ public class AddressBook {
                     System.out.println("Enter Address book Name");
                     addressBookName = sc.next();
                     addressBookHashMap = new HashMap<>();
+                    //Files.createFile(Paths.get(path + "/" + addressBookName + ".txt"));
                     break;
                 case 2:
                     System.out.println("Enter Address book Name for Edit");
@@ -53,18 +56,14 @@ public class AddressBook {
                         //ArrayList temp=addressBookHashMap.get(addressBookName);
                         arrayList.add(addressBookHashMap.get(addressBookName));
                         // temp.add(arrayList);
-
                     }
 
-                    Path fileName = Paths.get( PATH+ "/"+addressBookName+".txt");
-                    System.out.println(fileName);
-                    if(Files.notExists(fileName)){
-                        Files.createFile(fileName);
-                        List<String> s=Arrays.asList(arrayList.toString());
-                        Files.write(fileName,s, StandardOpenOption.APPEND);
-                    }
+                    writeDataIntoFileNio(addressBookName, arrayList);//Write data into the file using nio pac
 
+                    //Write data in CSV file
+                    writeAddressBookIntoCsvFile(addressBookName, arrayList);
                     addressBookHashMap.put(addressBookName, arrayList);
+
                     break;
                 case 3:
                     System.out.println("Enter Address book Name for Delete...");
@@ -72,7 +71,7 @@ public class AddressBook {
                     addressBookHashMap.remove(addressBookName);
                     break;
                 case 4:
-                    System.out.println("Address Book List");
+                    System.out.println("Address Bool List");
                     //System.out.println(addressBookHashMap);
                     printAddressBookHashMap(addressBookHashMap);
                     break;
@@ -89,12 +88,13 @@ public class AddressBook {
                     break;
                 case 7:
                     System.out.print("Enter City or State name : ");
-                    int numberOfContact=countOfContact((new Scanner(System.in).next()),addressBookHashMap);
-                    System.out.println("Total number of contact in given City is : "+numberOfContact);
+                    int numberOfContact = countOfContact((new Scanner(System.in).next()), addressBookHashMap);
+                    System.out.println("Total number of contact in given City is : " + numberOfContact);
+                    break;
                 case 8:
-                    System.out.println("Enter the Book Name ; ");
-                    String book=sc.next();
-                    List<ContactPerson> contacts=addressBookHashMap.get(book);
+                    System.out.println("Enter the Book Name : ");
+                    String book = sc.next();
+                    List<ContactPerson> contacts = addressBookHashMap.get(book);
                     sortContact(contacts);
                     break;
                 case 9:
@@ -112,6 +112,31 @@ public class AddressBook {
             }
         }
     }
+
+    private static void writeDataIntoFileNio(String addressBookName, ArrayList arrayList) throws IOException {
+        Path fileName = Paths.get(PATH + "/" + addressBookName + ".txt");
+        System.out.println(fileName);
+        if (Files.notExists(fileName)) {
+            Files.createFile(fileName);
+            List<String> s = Arrays.asList(arrayList.toString());
+            Files.write(fileName, s, StandardOpenOption.APPEND);
+        }
+    }
+
+    private static void writeAddressBookIntoCsvFile(String addressBookName, ArrayList arrayList) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+
+        Path csvFile = Paths.get(PATH + "/" + addressBookName + ".csv");
+        Writer writer = Files.newBufferedWriter(csvFile);
+        StatefulBeanToCsv<ContactPerson> beanToCSV = new StatefulBeanToCsvBuilder<ContactPerson>(writer)
+                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                .build();
+        for (Object cp : arrayList) {
+            beanToCSV.write((ContactPerson) cp);
+        }
+        writer.close();
+
+    }
+
     private static void sortAddressBookCityStateZip(int option, List<ContactPerson> contact) {
         List<ContactPerson> listObject = null;
         if (option == 1) {
@@ -127,11 +152,12 @@ public class AddressBook {
             System.out.println(cp);
         }
     }
+
     private static void sortContact(List<ContactPerson> contacts) {
-        List<ContactPerson> listObject=
-                contacts.stream().sorted((o1,o2)->o1.firstName.compareTo(o2.firstName)).collect(Collectors.toList());
+        List<ContactPerson> listObject =
+                contacts.stream().sorted((o1, o2) -> o1.firstName.compareTo(o2.firstName)).collect(Collectors.toList());
         //System.out.println(listObject);
-        for(ContactPerson cp:listObject){
+        for (ContactPerson cp : listObject) {
             System.out.println(cp);
         }
     }
@@ -150,12 +176,24 @@ public class AddressBook {
     }
 
     private static void printAddressBookHashMap(Map<String, ArrayList<ContactPerson>> addressBookHashMap) throws IOException {
+        System.out.println("-----------------Contact from the txt files ---------------------------");
         for (String name : addressBookHashMap.keySet()) {
-            Path fileName = Paths.get(PATH +"/"+name+".txt");
+
+            Path fileName = Paths.get(PATH + "/" + name + ".txt");
             List<String> list = Files.readAllLines(fileName);
 
-            for (String bookData:list)
-            {
+            for (String bookData : list) {
+                System.out.println(bookData);
+            }
+        }
+        System.out.println("---------------------Contact from the CSV files ------------------------");
+        //Print data from the CSV file
+        for (String name : addressBookHashMap.keySet()) {
+
+            Path fileName = Paths.get(PATH + "/" + name + ".csv");
+            List<String> list = Files.readAllLines(fileName);
+
+            for (String bookData : list) {
                 System.out.println(bookData);
             }
         }
@@ -190,4 +228,5 @@ public class AddressBook {
                 });
     }
 }
+
 

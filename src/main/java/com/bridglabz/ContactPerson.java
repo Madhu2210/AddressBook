@@ -11,7 +11,7 @@ public class ContactPerson {
     String city;
     String state;
     Integer zip;
-    long phoneNumber;
+    Long phoneNumber;
     String emailId;
 
     public ContactPerson() {
@@ -50,7 +50,7 @@ public class ContactPerson {
         }
     }
 
-    public void updatedata(String name, ArrayList<ContactPerson> record) {
+    public void updateData(String name, ArrayList<ContactPerson> record) {
         for (int i = 0; i < record.size(); i++) {
             if (name.equals(record.get(i).firstName)) {
                 record.remove(i);
